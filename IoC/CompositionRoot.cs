@@ -9,6 +9,9 @@ using Repository.Dapper.Mappers;
 using Repository.Dapper.Mappers.Interfaces;
 using Repository.Mongo.Infrastructure;
 using Repository.Mongo.Infrastructure.Interfaces;
+using Repository.Neo4j.Infrastructure;
+using Repository.Neo4j.Requests;
+using Repository.Neo4j.Requests.Interfaces;
 using Services;
 using Services.Interfaces;
 using SocialMedia.Domain.Users.Interfaces;
@@ -24,9 +27,9 @@ namespace IoC.CompositionRoot
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<Services.Mappers.Interfaces.IPostMapper, Services.Mappers.PostMapper>();
-            services.AddTransient<IUriFormatter, UriFormatter>(); 
+            services.AddTransient<IUriFormatter, UriFormatter>();
 
-            ConfigureMongo(services);
+            ConfigureNeo4j(services);
         }
 
         public static void ConfigureDapper(this IServiceCollection services)
@@ -47,6 +50,16 @@ namespace IoC.CompositionRoot
             services.AddTransient<Repository.Mongo.Mappers.Interfaces.IPostMapper, Repository.Mongo.Mappers.PostMapper>();
             services.AddTransient<IPostIdCounter, PostIdCounter>();
             services.AddTransient<IUserIdCounter, UserIdCounter>();
+        }
+
+        public static void ConfigureNeo4j(this IServiceCollection services)
+        {
+            services.AddTransient<INeo4jRequests, Neo4jRequests>();
+            services.AddTransient<INeo4jDbParams, Neo4jDbParams>();
+            services.AddTransient<IUserActions, Repository.Neo4j.UserActions>();
+            services.AddTransient<IPostActions, Repository.Neo4j.PostActions>();
+            services.AddTransient<Repository.Neo4j.Mappers.Interfaces.IUserMapper, Repository.Neo4j.Mappers.UserMapper>();
+            services.AddTransient<Repository.Neo4j.Mappers.Interfaces.IPostMapper, Repository.Neo4j.Mappers.PostMapper>();
         }
     }
 }

@@ -3,8 +3,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using GlobalExceptionHandler.WebApi;
 using System;
-using static System.Net.HttpStatusCode;
 using API.Infrastructure.Models;
+using System.Net;
 
 namespace API.Infrastructure
 {
@@ -29,7 +29,7 @@ namespace API.Infrastructure
                 }, jsonSerializerSettings));
 
             cfg.Map<Exception>()
-                .ToStatusCode(InternalServerError)
+                .ToStatusCode(HttpStatusCode.InternalServerError)
                 .WithBody((ex, context) =>
                     JsonConvert.SerializeObject(
                         new Result<Exception>()
@@ -39,7 +39,7 @@ namespace API.Infrastructure
                         }));
 
             cfg.Map<UnauthorizedAccessException>()
-                .ToStatusCode(Unauthorized)
+                .ToStatusCode(HttpStatusCode.Unauthorized)
                 .WithBody((ex, content) =>
                         JsonConvert.SerializeObject(
                             new Result<UnauthorizedAccessException>()

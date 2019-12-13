@@ -27,7 +27,8 @@ namespace SocialMedia
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            const string signingSecurityKey = "0d5b3235a8b403c3dab9c3f4f65c07fcalskd234n1k41230";
+            string signingSecurityKey = this.Configuration.GetSection("Auth").GetValue<string>("JwtSigningSecurityKey");
+
             var signingKey = new SigningSymmetricKey(signingSecurityKey);
             services.AddSingleton<IJwtSigningEncodingKey>(signingKey);
 

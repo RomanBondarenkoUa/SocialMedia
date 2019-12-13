@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Repository.Dapper.Helpers
+namespace Repository.Helpers
 {
     public static class CommentHelper
     {

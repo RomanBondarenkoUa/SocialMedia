@@ -2,8 +2,8 @@
 using Domain.Users.Posts;
 using Domain.Users.SocialActivities;
 using Repository.Dapper.DataModels;
-using Repository.Dapper.Helpers;
 using Repository.Dapper.Mappers.Interfaces;
+using Repository.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

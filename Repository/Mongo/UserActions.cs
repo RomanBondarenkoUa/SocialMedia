@@ -1,6 +1,4 @@
 ﻿using Domain.Users.Interfaces;
-using Domain.Users.Posts;
-using Global.Environment;
 using Global.Environment.Interfaces;
 using MongoDB.Driver;
 using Repository.Mongo.Infrastructure.Interfaces;
