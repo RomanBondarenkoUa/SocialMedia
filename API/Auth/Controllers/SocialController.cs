@@ -2,6 +2,7 @@
 using System.Linq;
 using API.Infrastructure.Helpers;
 using Domain.Users.Posts;
+using Domain.Users.Posts.Comments;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -39,6 +40,22 @@ namespace API.Auth.Controllers
             var email = HttpContext.User.ExtractEmail();
 
             return this.postService.GetUserFeeds(email, page, itemsPerPage);
+        }
+
+        [HttpPost]
+        [Route("/[controller]/me/leave-comment")]
+        public void LeaveComment(long postId, string commentText, bool? isPositiveFeedback)
+        {
+            var email = HttpContext.User.ExtractEmail();
+
+            var commentModel = new CreateCommentModel
+            {
+                CommentatorEmail = email,
+                IsPositiveComment = isPositiveFeedback,
+                Text = commentText,
+            };
+            
+            this.postService.LeaveComment(commentModel);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Domain.Users.Interfaces;
 using Domain.Users.Posts;
+using Domain.Users.Posts.Comments;
 using Global.Environment.Interfaces;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -48,6 +49,11 @@ namespace Repository.Mongo
             posts.InsertOne(post);
 
             return post._id;
+        }
+
+        public void CreateReaction(CreateCommentModel createCommentModel)
+        {
+            throw new NotImplementedException();
         }
 
         public void DeletePost(long postId)

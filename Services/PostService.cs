@@ -1,5 +1,6 @@
 ﻿using Domain.Users.Interfaces;
 using Domain.Users.Posts;
+using Domain.Users.Posts.Comments;
 using Domain.Users.SocialActivities;
 using Services.Interfaces;
 using System;
@@ -45,6 +46,11 @@ namespace Services
         public IEnumerable<PostPreviewDto> GetUserFeeds(string userEmail, int page, int itemsOnPage)
         {
             return this.postMapper.Map(this.postActions.GetUserFeeds(userEmail, page, itemsOnPage));
+        }
+
+        public void LeaveComment(CreateCommentModel createCommentModel)
+        {
+            this.postActions.CreateReaction(createCommentModel);
         }
     }
 }

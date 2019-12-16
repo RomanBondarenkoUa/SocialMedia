@@ -1,5 +1,6 @@
 ﻿using Domain.Users.Interfaces;
 using Domain.Users.Posts;
+using Domain.Users.Posts.Comments;
 using Domain.Users.SocialActivities;
 using Global.Environment.Interfaces;
 using Neo4jClient;
@@ -172,19 +173,6 @@ namespace Repository.Neo4j
             return feedPosts.Select(p => this.ComposePost(p.Publisher, p.Post, p.Reactions, p.Commentators));
         }
 
-        private long GetNewPostId()
-        {
-            client.Connect();
-
-            return client.Cypher
-                .Merge(this.neo4jRequests.AutoIncrementor_MergeRequest)
-                .Set(this.neo4jRequests.AutoIncrementor_GetNewPostId_SetRequest)
-                .Return(increment => increment.As<Incrementor>().LatestPostId)
-                .Results
-                .First()
-                .Value;
-        }
-
 
         public Domain.Users.SocialActivities.Post ComposePost(
             Neo4j.DataModels.User publisher,
@@ -202,7 +190,7 @@ namespace Repository.Neo4j
             {
                 comments.Add(new Comment { CreatorName = c.Name, IsPositiveComment = r.IsPositive, Text = r.Text });
                 return r;
-            });
+            }).Count();
             
             return new Domain.Users.SocialActivities.Post
             {
@@ -222,6 +210,38 @@ namespace Repository.Neo4j
         public void Dispose()
         {
             this.client.Dispose();
+        }
+
+        public void CreateReaction(CreateCommentModel createCommentModel)
+        {
+            this.client.Connect();
+
+            var newComment = new Neo4j.DataModels.Reaction
+            {
+                IsPositive = createCommentModel.IsPositiveComment,
+                Text = createCommentModel.Text,
+            };
+
+            this.client.Cypher
+                .Match("(post:Post), (commentator:User)")
+                .Where((Neo4j.DataModels.Post post) => post.Id == createCommentModel.PostId)
+                .AndWhere((Neo4j.DataModels.User commentator) => commentator.Email == createCommentModel.CommentatorEmail)
+                .Create("(post)<-[:COMMENT_FOR]-(comment:Reaction {newComment})<-[:LEAVE_REACTION]-(commentator)")
+                .WithParam("newComment", newComment)
+                .ExecuteWithoutResults();
+        }
+
+        private long GetNewPostId()
+        {
+            client.Connect();
+
+            return client.Cypher
+                .Merge(this.neo4jRequests.AutoIncrementor_MergeRequest)
+                .Set(this.neo4jRequests.AutoIncrementor_GetNewPostId_SetRequest)
+                .Return(increment => increment.As<Incrementor>().LatestPostId)
+                .Results
+                .First()
+                .Value;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Domain.Users.Posts;
+using Domain.Users.Posts.Comments;
 using Domain.Users.SocialActivities;
 using System.Collections.Generic;
 
@@ -17,5 +18,7 @@ namespace Domain.Users.Interfaces
         IEnumerable<Domain.Users.SocialActivities.Post> GetPostsByPublisherId(int publisherId, int page, int itemsPerPage);
 
         IEnumerable<Domain.Users.SocialActivities.Post> GetUserFeeds(string userEmail, int page, int itemsOnPage);
+
+        void CreateReaction(CreateCommentModel createCommentModel);
     }
 }

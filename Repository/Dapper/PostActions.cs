@@ -1,11 +1,10 @@
 ﻿using Dapper;
 using Domain.Users.Interfaces;
 using Domain.Users.Posts;
+using Domain.Users.Posts.Comments;
 using Domain.Users.SocialActivities;
-using Global.Environment;
 using Global.Environment.Interfaces;
 using Repository.Dapper.DataModels;
-using Repository.Dapper.Infrastructure;
 using Repository.Dapper.Mappers.Interfaces;
 using SocialMedia.Domain.Users.Interfaces;
 using System;
@@ -120,6 +119,11 @@ namespace Repository.Dapper
         }
 
         public IEnumerable<Domain.Users.SocialActivities.Post> GetUserFeeds(string userEmail, int page, int itemsOnPage)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateReaction(CreateCommentModel createCommentModel)
         {
             throw new NotImplementedException();
         }

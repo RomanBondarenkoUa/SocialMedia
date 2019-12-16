@@ -9,6 +9,5 @@ namespace Repository.Neo4j.DataModels
         public string Text { get; set; }
 
         public bool? IsPositive { get; set; }
-
     }
 }
