@@ -22,31 +22,31 @@ namespace SocialMedia.Users.Actions
         ///     if userId does not exist:
         ///         return HTTP 400;
         /// </summary>
-        [HttpGet]
-        public Result<IEnumerable<Conversation>> GetConversations(
-            [FromBody] int userId,
-            [FromQuery] int page = 0,
-            [FromQuery] int itemsPerPage = 30)
-        {
-            throw new NotImplementedException();
-        }
+        //[HttpGet]
+        //public Result<IEnumerable<Conversation>> GetConversations(
+        //    [FromBody] int userId,
+        //    [FromQuery] int page = 0,
+        //    [FromQuery] int itemsPerPage = 30)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-            throw new NotImplementedException();
-        }
+        //[HttpPost]
+        //public void Post([FromBody] string value)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-            throw new NotImplementedException();
-        }
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }
