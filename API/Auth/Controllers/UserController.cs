@@ -53,7 +53,6 @@ namespace API.Auth.Controllers
             [FromHeader] string passwordHash)
         {
             var email = HttpContext.User.ExtractEmail();
-
             this.userService.DeleteUser(email, passwordHash);
         }
     }
